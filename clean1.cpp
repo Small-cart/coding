@@ -11,7 +11,6 @@ void read_fast(){
 }
 
 void solve(){
-
 }
 
 
