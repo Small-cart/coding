@@ -6,7 +6,7 @@ void read_fast(){
     cin.tie(0);
     cout.tie(0);
 #ifndef ONLINE_JUDGE
-    freopen("1.in","r",stdin);
+ //freopen("1.in","r",stdin);
 #endif
 }
 
@@ -29,6 +29,7 @@ int fp(int l,int r){
 }
 
 void ans(int l,int r){
+    if(l!=0&&r==0)r=l;
     cout<<"!"<<' '<<l<<" "<<r<<endl;
     fflush(stdout);
     return;
@@ -45,70 +46,19 @@ void solve(){
         int len;
         cin>>len;
         int l=1,r=len;
-        int spp_r=0,spp_l=0,mid=0,ans_l=0,ans_r=0,spp_mid=0;
-        if (check(l,r,op(l,r),fp(l,r))){ans(l,r);return;}
-        int first=1;
-        bool change= false;
+        int n= fp(l,r)-op(l,r);
         while (l<r){
-            if (change){
-                l=spp_l;
-                r=spp_r;
-                change= false;
-                continue;
+            int mid=(l+r)/2;
+            int oop= op(l,mid),ffp=fp(l,mid);
+            if(oop==ffp){
+                l=mid+1;
             }
-            if(abs(l-r)==1){
-
-                if(ans_l==0){
-                    if(fp(l,l)-op(l,l)==1){
-                        ans_l=l;
-                    } else{
-                        ans_l=r;
-                    }
-                    change= true;
-                    continue;
-                }
-                if(ans_r==0) {
-                    if (fp(r, r) - op(r, r) == 1)
-                        ans_r = r;
-
-                    else {
-                        ans_r = l;
-                    }
-                    if(ans_r!=0&&ans_l!=0){
-                        ans(ans_l,ans_r);
-                        return;
-                    }
-                }
-            }
-            mid=(l+r)/2;
-            bool a= false,b= false;
-            if (first){
-                a=check(l,mid,op(l,mid),fp(l,mid));b=check(mid,r,op(mid,r),fp(mid,r));
-            }
-            if((!a && !b && first) || (a && b && first)){
-                spp_l=mid;
-                spp_r=r;
+            else{
                 r=mid;
-                first=0;
-                }
-            if((!a&&b&&r==len))
-            {
-                ans(mid,r);
-                return;
-            } else if(a&&!b&&ans_l!=0){
-                ans(ans_l,mid);
-                return;
-            }
-            if(!check(l,mid,op(l,mid),fp(l,mid))){
-                r=mid;
-                continue;
-            }
-            else if(!check(mid,r,op(mid,r),fp(mid,r))){
-                l=mid;
-                continue;
             }
         }
-    ans(ans_l,ans_r);
+        ans(l,l+n-1);
+
 
 
 
